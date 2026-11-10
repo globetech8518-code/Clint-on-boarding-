@@ -1,422 +1,1097 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Globe Tech Pvt Ltd - Client Onboarding</title>
-    <style>
-        :root {
-            --primary: #0f172a;
-            --accent: #2563eb;
-            --success: #16a34a;
-            --error: #dc2626;
-            --bg: #f8fafc;
-            --card: #ffffff;
-            --text: #334155;
-            --border: #cbd5e1;
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Globe Tech Pvt Ltd | Client Onboarding & Agreement Portal</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          fontFamily: {
+            sans: ['"Plus Jakarta Sans"', 'Inter', 'sans-serif'],
+          },
+          colors: {
+            brand: {
+              50: '#eef6ff',
+              100: '#dbeafe',
+              200: '#bfdbfe',
+              500: '#2563eb',
+              600: '#1d4ed8',
+              700: '#1e40af',
+              800: '#1e3a8a',
+              900: '#0f172a',
+            }
+          }
         }
-
-        * {
-            box-sizing: border-box;
-            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            margin: 0;
-            padding: 0;
-        }
-
-        body {
-            background-color: var(--bg);
-            color: var(--text);
-            padding: 20px;
-            line-height: 1.6;
-        }
-
-        .container {
-            max-width: 600px;
-            margin: 0 auto;
-            background: var(--card);
-            padding: 30px;
-            border-radius: 12px;
-            box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1);
-        }
-
-        header {
-            text-align: center;
-            margin-bottom: 30px;
-        }
-
-        h1 {
-            color: var(--primary);
-            font-size: 24px;
-            margin-bottom: 8px;
-        }
-
-        p.subtitle {
-            color: #64748b;
-            font-size: 14px;
-        }
-
-        .form-group {
-            margin-bottom: 20px;
-            position: relative;
-        }
-
-        label {
-            display: block;
-            font-weight: 600;
-            margin-bottom: 8px;
-            font-size: 14px;
-            color: var(--primary);
-        }
-
-        input[type="text"],
-        input[type="date"],
-        input[type="email"],
-        select {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid var(--border);
-            border-radius: 6px;
-            font-size: 16px;
-            transition: border-color 0.2s;
-        }
-
-        input:focus, select:focus {
-            outline: none;
-            border-color: var(--accent);
-        }
-
-        input.invalid {
-            border-color: var(--error);
-        }
-
-        .error-message {
-            color: var(--error);
-            font-size: 12px;
-            margin-top: 5px;
-            display: none;
-        }
-
-        .plan-card {
-            border: 2px solid var(--border);
-            padding: 15px;
-            border-radius: 8px;
-            margin-bottom: 12px;
-            cursor: pointer;
-            transition: all 0.2s;
-        }
-
-        .plan-card.selected {
-            border-color: var(--accent);
-            background-color: #eff6ff;
-        }
-
-        .plan-header {
-            display: flex;
-            justify-content: space-between;
-            font-weight: bold;
-            color: var(--primary);
-            margin-bottom: 5px;
-        }
-
-        .plan-details {
-            font-size: 13px;
-            color: #64748b;
-        }
-
-        .capital-notice {
-            background-color: #fef3c7;
-            border-left: 4px solid #f59e0b;
-            padding: 10px;
-            margin-bottom: 20px;
-            font-size: 13px;
-            color: #92400e;
-            border-radius: 0 4px 4px 0;
-        }
-
-        .checkbox-group {
-            margin: 25px 0;
-            display: flex;
-            align-items: flex-start;
-            gap: 10px;
-        }
-
-        .checkbox-group input {
-            margin-top: 5px;
-        }
-
-        .checkbox-group label {
-            margin-bottom: 0;
-            font-weight: normal;
-            font-size: 14px;
-            cursor: pointer;
-        }
-
-        button.submit-btn {
-            width: 100%;
-            background-color: var(--accent);
-            color: white;
-            border: none;
-            padding: 15px;
-            font-size: 16px;
-            font-weight: 600;
-            border-radius: 6px;
-            cursor: pointer;
-            transition: background-color 0.2s;
-        }
-
-        button.submit-btn:hover {
-            background-color: #1d4ed8;
-        }
-
-        /* Modal styling */
-        .modal {
-            display: none;
-            position: fixed;
-            z-index: 1000;
-            left: 0;
-            top: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(0,0,0,0.5);
-        }
-
-        .modal-content {
-            background-color: var(--card);
-            margin: 15% auto;
-            padding: 25px;
-            border-radius: 8px;
-            width: 90%;
-            max-width: 400px;
-            box-shadow: 0 10px 15px -3px rgba(0,0,0,0.1);
-        }
-
-        .modal h2 {
-            margin-bottom: 15px;
-            color: var(--primary);
-        }
-
-        /* Thank you screen */
-        #thankYouScreen {
-            display: none;
-            text-align: center;
-            padding: 40px 20px;
-        }
-
-        #thankYouScreen h2 {
-            color: var(--success);
-            font-size: 32px;
-            margin-bottom: 15px;
-        }
-
-        .success-icon {
-            font-size: 64px;
-            color: var(--success);
-            margin-bottom: 20px;
-        }
-    </style>
+      }
+    }
+  </script>
+  <style>
+    body {
+      font-family: 'Plus Jakarta Sans', sans-serif;
+      background: radial-gradient(circle at top right, #f8fafc 0%, #f1f5f9 50%, #e2e8f0 100%);
+      color: #0f172a;
+    }
+    .glass-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border: 1px solid rgba(226, 232, 240, 0.8);
+      box-shadow: 0 10px 25px -5px rgba(15, 23, 42, 0.05), 0 8px 10px -6px rgba(15, 23, 42, 0.02);
+    }
+    .plan-card {
+      transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+    }
+    .plan-card:hover {
+      transform: translateY(-4px);
+    }
+    .plan-card.active {
+      border-color: #2563eb;
+      background-color: #eff6ff;
+      box-shadow: 0 0 0 2px #2563eb, 0 12px 24px -6px rgba(37, 99, 235, 0.15);
+    }
+    input:focus, select:focus, textarea:focus {
+      outline: none;
+      border-color: #2563eb;
+      box-shadow: 0 0 0 3px rgba(37, 99, 235, 0.15);
+    }
+    .badge-glow {
+      box-shadow: 0 0 12px rgba(16, 185, 129, 0.3);
+    }
+  </style>
 </head>
-<body>
+<body class="min-h-screen py-8 px-4 sm:px-6 lg:px-8">
 
-<div class="container" id="formContainer">
-    <header>
-        <h1>Globe Tech Pvt Ltd</h1>
-        <p class="subtitle">Client Onboarding & Subscription Portal</p>
-    </header>
-
-    <form id="onboardingForm">
-        <div class="form-group">
-            <label for="clientName">CLIENT LEGAL NAME *</label>
-            <input type="text" id="clientName" placeholder="e.g. Dev Singh" required>
-        </div>
-
-        <div class="form-group">
-            <label for="fatherName">FATHER'S NAME *</label>
-            <input type="text" id="fatherName" placeholder="e.g. Ramesh Singh" required>
-        </div>
-
-        <div class="form-group">
-            <label for="dob">DATE OF BIRTH (DOB) *</label>
-            <input type="date" id="dob" required>
-        </div>
-
-        <div class="form-group">
-            <label for="pan">PAN CARD NUMBER *</label>
-            <input type="text" id="pan" placeholder="ABCDE1234F" maxlength="10" style="text-transform: uppercase;" required>
-        </div>
-
-        <div class="form-group">
-            <label for="email">EMAIL ADDRESS *</label>
-            <input type="email" id="email" placeholder="dev@example.com" required>
-            <div class="error-message" id="emailError">Please enter a valid email address.</div>
-        </div>
-
-        <div class="form-group">
-            <label for="mobile">MOBILE NUMBER *</label>
-            <input type="text" id="mobile" placeholder="9876543210" maxlength="10" required>
-        </div>
-
-        <label>SELECT SERVICE PLAN *</label>
-        <div id="plansList">
-            <div class="plan-card selected" onclick="selectPlan('1 Month', 65000, this)">
-                <div class="plan-header"><span>1 Month Plan</span><span>₹65,000 + GST</span></div>
-                <div class="plan-details">Includes 18% GST. Specific profit targets apply.</div>
-            </div>
-            <div class="plan-card" onclick="selectPlan('2 Months', 110000, this)">
-                <div class="plan-header"><span>2 Months Plan</span><span>₹1,10,000 + GST</span></div>
-                <div class="plan-details">Includes 18% GST. Specific profit targets apply.</div>
-            </div>
-            <div class="plan-card" onclick="selectPlan('3 Months', 150000, this)">
-                <div class="plan-header"><span>3 Months Plan</span><span>₹1,50,000 + GST</span></div>
-                <div class="plan-details">Includes 18% GST. Specific profit targets apply.</div>
-            </div>
-            <div class="plan-card" onclick="selectPlan('6 Months', 270000, this)">
-                <div class="plan-header"><span>6 Months Plan</span><span>₹2,70,000 + GST</span></div>
-                <div class="plan-details">Includes 18% GST. Specific profit targets apply.</div>
-            </div>
-        </div>
-
-        <div class="capital-notice">
-            ⚠️ Obligation: Minimum capital requirement of 1 Lac INR is mandatory for all plans to meet specific profit targets.
-        </div>
-
-        <div class="checkbox-group">
-            <input type="checkbox" id="terms" required>
-            <label for="terms">I agree to the Terms and Conditions and acknowledge the minimum capital requirement of 1 Lac INR.</label>
-        </div>
-
-        <button type="button" class="submit-btn" onclick="initiateSubmission()">Proceed to Verify</button>
-    </form>
-</div>
-
-<!-- Confirmation Modal -->
-<div id="confirmModal" class="modal">
-    <div class="modal-content">
-        <h2>Confirm Mobile Number</h2>
-        <p style="margin-bottom: 15px; font-size: 14px;">Please re-enter your mobile number to ensure accuracy.</p>
-        <div class="form-group" style="margin-bottom: 20px;">
-            <input type="text" id="confirmMobile" placeholder="Re-enter Mobile Number" maxlength="10">
-            <div class="error-message" id="mobileError" style="display: block;">Numbers do not match.</div>
-        </div>
-        <button class="submit-btn" onclick="finalizeSubmission()">Confirm & Submit</button>
+  <!-- Header & Brand Bar -->
+  <header class="max-w-4xl mx-auto mb-8 text-center">
+    <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-200 text-blue-700 text-xs font-semibold uppercase tracking-wider mb-4 shadow-sm">
+      <svg class="w-4 h-4 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+        <path fill-rule="evenodd" d="M2.166 4.999A11.954 11.954 0 0010 1.944 11.954 11.954 0 0017.834 5c.11.65.166 1.32.166 2.001 0 5.225-3.34 9.67-8 11.317C5.34 16.67 2 12.225 2 7c0-.682.057-1.35.166-2.001zm11.541 3.708a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path>
+      </svg>
+      Official Client Onboarding Portal
     </div>
-</div>
+    <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+      Globe Tech Pvt Ltd
+    </h1>
+    <p class="mt-2 text-base sm:text-lg text-slate-600 max-w-2xl mx-auto">
+      Complete your service agreement & client registration to initiate premium algorithmic research advisory.
+    </p>
 
-<!-- Thank You Screen -->
-<div class="container" id="thankYouScreen">
-    <div class="success-icon">✓</div>
-    <h2>Thank You!</h2>
-    <p>Your onboarding details have been successfully submitted to Globe Tech Pvt Ltd.</p>
-</div>
+    <!-- Key Compliance Badges -->
+    <div class="mt-5 flex flex-wrap items-center justify-center gap-3 text-xs font-medium text-slate-600">
+      <span class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white border border-slate-200 shadow-sm">
+        <svg class="w-3.5 h-3.5 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+        Instant Mobile & KYC Verification
+      </span>
+      <span class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white border border-slate-200 shadow-sm">
+        <svg class="w-3.5 h-3.5 text-blue-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path></svg>
+        18% GST Compliant Invoicing
+      </span>
+      <span class="flex items-center gap-1.5 px-3 py-1 rounded-lg bg-white border border-slate-200 shadow-sm">
+        <svg class="w-3.5 h-3.5 text-amber-600" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 10V3L4 14h7v7l9-11h-7z"></path></svg>
+        Instant Verification Setup
+      </span>
+    </div>
+  </header>
 
-<script>
-    const OWNER_PHONE = "7566598095";
-    const WEBHOOK_URL = "https://hook.eu1.make.com/gg1n5e2j33vw61dbid6rqfvulydyfop3";
-    
-    let selectedPlan = {
-        name: "1 Month",
-        baseFee: 65000
+  <!-- Main Onboarding Form Container -->
+  <main class="max-w-4xl mx-auto">
+    <form id="onboardingForm" class="space-y-8" onsubmit="handleInitialSubmit(event)">
+
+      <!-- SECTION 1: Client Personal Details -->
+      <section class="glass-card rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 pb-4 mb-6 border-b border-slate-100">
+          <div class="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm">
+            1
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-slate-900">Client Identification Details</h2>
+            <p class="text-xs sm:text-sm text-slate-500">Provide verified KYC details. All fields are strictly validated.</p>
+          </div>
+        </div>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5">
+          <!-- Full Name -->
+          <div>
+            <label for="clientName" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+              Client Legal Name <span class="text-red-500">*</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z"></path></svg>
+              </span>
+              <input
+                type="text"
+                id="clientName"
+                name="clientName"
+                required
+                placeholder="e.g. Dev Sharma"
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-slate-900 text-sm transition placeholder-slate-400"
+              />
+            </div>
+            <p id="nameError" class="hidden text-xs text-red-500 font-medium mt-1">Please enter client's full legal name.</p>
+          </div>
+
+          <!-- Father Name -->
+          <div>
+            <label for="fatherName" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+              Father's Name <span class="text-red-500">*</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z"></path></svg>
+              </span>
+              <input
+                type="text"
+                id="fatherName"
+                name="fatherName"
+                required
+                placeholder="e.g. Ramesh Sharma"
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-slate-900 text-sm transition placeholder-slate-400"
+              />
+            </div>
+            <p id="fatherError" class="hidden text-xs text-red-500 font-medium mt-1">Please enter father's name.</p>
+          </div>
+
+          <!-- Date of Birth -->
+          <div>
+            <label for="clientDob" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+              Date of Birth (DOB) <span class="text-red-500">*</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"></path></svg>
+              </span>
+              <input
+                type="date"
+                id="clientDob"
+                name="clientDob"
+                required
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-slate-900 text-sm transition"
+              />
+            </div>
+            <p id="dobError" class="hidden text-xs text-red-500 font-medium mt-1">Please select date of birth.</p>
+          </div>
+
+          <!-- PAN Card Number -->
+          <div>
+            <label for="clientPan" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+              PAN Card Number <span class="text-red-500">*</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 6H5a2 2 0 00-2 2v9a2 2 0 002 2h14a2 2 0 002-2V8a2 2 0 00-2-2h-5m-4 0V5a2 2 0 114 0v1m-4 0a2 2 0 104 0m-5 8a2 2 0 100-4 2 2 0 000 4zm0 0c1.306 0 2.417.835 2.83 2M9 14a3.001 3.001 0 00-2.83 2M15 11h3m-3 4h2"></path></svg>
+              </span>
+              <input
+                type="text"
+                id="clientPan"
+                name="clientPan"
+                required
+                maxlength="10"
+                placeholder="e.g. ABCDE1234F"
+                oninput="this.value = this.value.toUpperCase(); validatePanRealtime();"
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-slate-900 text-sm tracking-widest font-mono uppercase transition placeholder-slate-400"
+              />
+            </div>
+            <p id="panError" class="hidden text-xs text-red-500 font-medium mt-1">Please enter a valid 10-character PAN (e.g. ABCDE1234F).</p>
+          </div>
+
+          <!-- Email Address (with Real-time Format Indicator) -->
+          <div>
+            <div class="flex justify-between items-center mb-1.5">
+              <label for="clientEmail" class="block text-xs font-semibold uppercase tracking-wider text-slate-700">
+                Email Address <span class="text-red-500">*</span>
+              </label>
+              <span id="emailValidBadge" class="hidden text-[11px] font-bold text-emerald-800 bg-emerald-100 border border-emerald-300 px-2 py-0.5 rounded-full flex items-center gap-1 shadow-sm">
+                <svg class="w-3 h-3 text-emerald-600" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"></path></svg>
+                Valid Email
+              </span>
+            </div>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 8l7.89 5.26a2 2 0 002.22 0L21 8M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z"></path></svg>
+              </span>
+              <input
+                type="email"
+                id="clientEmail"
+                name="clientEmail"
+                required
+                placeholder="dev@example.com"
+                oninput="handleEmailInput()"
+                onblur="handleEmailInput()"
+                class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-slate-900 text-sm transition placeholder-slate-400"
+              />
+            </div>
+            <p id="emailError" class="hidden text-xs text-red-500 font-medium mt-1">Invalid email format! Kripya sahi email address bharein.</p>
+          </div>
+
+          <!-- Mobile Number -->
+          <div>
+            <label for="clientPhone" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+              Mobile Number <span class="text-red-500">*</span>
+            </label>
+            <div class="relative">
+              <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 text-sm font-semibold">
+                +91
+              </span>
+              <input
+                type="tel"
+                id="clientPhone"
+                name="clientPhone"
+                required
+                maxlength="10"
+                placeholder="9876543210"
+                oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+                class="w-full pl-14 pr-4 py-2.5 rounded-xl border border-slate-300 text-slate-900 text-sm transition placeholder-slate-400 font-mono"
+              />
+            </div>
+            <p id="phoneError" class="hidden text-xs text-red-500 font-medium mt-1">Please enter a valid 10-digit mobile number.</p>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 2: Plan Selection for Globe Tech Pvt Ltd -->
+      <section class="glass-card rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center justify-between pb-4 mb-6 border-b border-slate-100 flex-wrap gap-2">
+          <div class="flex items-center gap-3">
+            <div class="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm">
+              2
+            </div>
+            <div>
+              <h2 class="text-xl font-bold text-slate-900">Select Service Plan</h2>
+              <p class="text-xs sm:text-sm text-slate-500">Transparent subscription plans with +18% statutory GST.</p>
+            </div>
+          </div>
+          <!-- Capital Requirement Badge -->
+          <div class="px-3 py-1.5 bg-emerald-50 border border-emerald-200 text-emerald-800 rounded-lg text-xs font-semibold flex items-center gap-1.5">
+            <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Min. Capital Required: ₹1,00,000 (1 Lac)
+          </div>
+        </div>
+
+        <!-- Hidden Input for Selected Plan -->
+        <input type="hidden" id="selectedPlanInput" name="selectedPlan" value="1month">
+
+        <!-- 4 Plan Cards Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+          <!-- 1 Month Plan -->
+          <div id="plan-1month" class="plan-card active rounded-2xl p-5 border-2 border-slate-200 bg-white relative" onclick="selectPlan('1month')">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Starter Track</span>
+                <h3 class="text-lg font-extrabold text-slate-900">1 Month Plan</h3>
+              </div>
+              <div class="plan-check w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+            </div>
+            <div class="my-3">
+              <div class="text-2xl font-black text-slate-900">₹65,000 <span class="text-xs font-semibold text-slate-500">+ 18% GST</span></div>
+              <div class="text-xs text-slate-500 font-medium">Net Total: <span class="text-slate-900 font-bold">₹76,700</span> (Incl. ₹11,700 GST)</div>
+            </div>
+            <div class="pt-3 border-t border-slate-100 space-y-1.5 text-xs text-slate-600">
+              <div class="flex items-center gap-1.5 font-semibold text-emerald-700">
+                <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Target: 20% - 25% Profit Target
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Min. ₹1,00,000 Trading Capital in Account
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Daily Algorithmic Advisory & Direct Setup
+              </div>
+            </div>
+          </div>
+
+          <!-- 2 Months Plan -->
+          <div id="plan-2months" class="plan-card rounded-2xl p-5 border-2 border-slate-200 bg-white relative" onclick="selectPlan('2months')">
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <span class="text-xs font-bold text-indigo-600 uppercase tracking-wider">Growth Track</span>
+                <h3 class="text-lg font-extrabold text-slate-900">2 Months Plan</h3>
+              </div>
+              <div class="plan-check w-6 h-6 rounded-full border border-slate-300 text-transparent flex items-center justify-center">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+            </div>
+            <div class="my-3">
+              <div class="text-2xl font-black text-slate-900">₹1,10,000 <span class="text-xs font-semibold text-slate-500">+ 18% GST</span></div>
+              <div class="text-xs text-slate-500 font-medium">Net Total: <span class="text-slate-900 font-bold">₹1,29,800</span> (Incl. ₹19,800 GST)</div>
+            </div>
+            <div class="pt-3 border-t border-slate-100 space-y-1.5 text-xs text-slate-600">
+              <div class="flex items-center gap-1.5 font-semibold text-emerald-700">
+                <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Target: 40% - 50% Profit Target
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Min. ₹1,00,000 Trading Capital in Account
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Multi-Strategy Execution & Risk Control
+              </div>
+            </div>
+          </div>
+
+          <!-- 3 Months Plan (Popular) -->
+          <div id="plan-3months" class="plan-card rounded-2xl p-5 border-2 border-slate-200 bg-white relative" onclick="selectPlan('3months')">
+            <div class="absolute -top-3 right-4 px-2.5 py-0.5 rounded-full bg-blue-600 text-white font-bold text-[10px] uppercase tracking-wider shadow">
+              Most Popular
+            </div>
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <span class="text-xs font-bold text-blue-600 uppercase tracking-wider">Professional Track</span>
+                <h3 class="text-lg font-extrabold text-slate-900">3 Months Plan</h3>
+              </div>
+              <div class="plan-check w-6 h-6 rounded-full border border-slate-300 text-transparent flex items-center justify-center">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+            </div>
+            <div class="my-3">
+              <div class="text-2xl font-black text-slate-900">₹1,50,000 <span class="text-xs font-semibold text-slate-500">+ 18% GST</span></div>
+              <div class="text-xs text-slate-500 font-medium">Net Total: <span class="text-slate-900 font-bold">₹1,77,000</span> (Incl. ₹27,000 GST)</div>
+            </div>
+            <div class="pt-3 border-t border-slate-100 space-y-1.5 text-xs text-slate-600">
+              <div class="flex items-center gap-1.5 font-semibold text-emerald-700">
+                <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Target: 70% - 85% Profit Target
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Min. ₹1,00,000 Trading Capital in Account
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Dedicated Quant Advisor & Weekly Review
+              </div>
+            </div>
+          </div>
+
+          <!-- 6 Months Plan (Best Value) -->
+          <div id="plan-6months" class="plan-card rounded-2xl p-5 border-2 border-slate-200 bg-white relative" onclick="selectPlan('6months')">
+            <div class="absolute -top-3 right-4 px-2.5 py-0.5 rounded-full bg-emerald-600 text-white font-bold text-[10px] uppercase tracking-wider shadow">
+              Highest Yield
+            </div>
+            <div class="flex justify-between items-start mb-2">
+              <div>
+                <span class="text-xs font-bold text-emerald-700 uppercase tracking-wider">Institutional Track</span>
+                <h3 class="text-lg font-extrabold text-slate-900">6 Months Plan</h3>
+              </div>
+              <div class="plan-check w-6 h-6 rounded-full border border-slate-300 text-transparent flex items-center justify-center">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+              </div>
+            </div>
+            <div class="my-3">
+              <div class="text-2xl font-black text-slate-900">₹2,70,000 <span class="text-xs font-semibold text-slate-500">+ 18% GST</span></div>
+              <div class="text-xs text-slate-500 font-medium">Net Total: <span class="text-slate-900 font-bold">₹3,18,600</span> (Incl. ₹48,600 GST)</div>
+            </div>
+            <div class="pt-3 border-t border-slate-100 space-y-1.5 text-xs text-slate-600">
+              <div class="flex items-center gap-1.5 font-semibold text-emerald-700">
+                <svg class="w-4 h-4 text-emerald-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Target: 150% - 180% Profit Target
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Min. ₹1,00,000 Trading Capital in Account
+              </div>
+              <div class="flex items-center gap-1.5">
+                <svg class="w-4 h-4 text-blue-500" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                Full Multi-Asset Portfolio Suite & Alpha Tools
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Dynamic Billing Breakdown Card -->
+        <div class="mt-6 p-4 sm:p-5 rounded-xl bg-slate-900 text-white">
+          <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4 border-b border-slate-800 pb-4">
+            <div>
+              <span class="text-xs font-semibold text-blue-400 uppercase tracking-wider">Plan Summary</span>
+              <div id="summaryPlanName" class="text-lg font-bold text-white">1 Month Plan Subscription</div>
+              <div id="summaryTarget" class="text-xs text-slate-300">Profit Target Milestone: 20% - 25% | Min. Capital: ₹1,00,000</div>
+            </div>
+            <div class="text-left sm:text-right">
+              <span class="text-xs text-slate-400">Total Payable (with GST)</span>
+              <div id="summaryTotalAmount" class="text-2xl font-black text-emerald-400">₹76,700</div>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 pt-3 text-xs text-slate-300">
+            <div>
+              <span class="text-slate-400 block">Base Service Fee:</span>
+              <span id="summaryBaseFee" class="font-bold text-white">₹65,000</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block">18% GST (CGST+SGST):</span>
+              <span id="summaryGstFee" class="font-bold text-white">₹11,700</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block">Required Capital:</span>
+              <span class="font-bold text-emerald-400">₹1,00,000 (Min)</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block">Invoice Type:</span>
+              <span class="font-bold text-white">Tax Invoice w/ GST</span>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- SECTION 3: Terms and Conditions Agreement -->
+      <section class="glass-card rounded-2xl p-6 sm:p-8">
+        <div class="flex items-center gap-3 pb-4 mb-4 border-b border-slate-100">
+          <div class="w-9 h-9 rounded-xl bg-blue-100 text-blue-700 flex items-center justify-center font-bold text-sm">
+            3
+          </div>
+          <div>
+            <h2 class="text-xl font-bold text-slate-900">Service Terms & Legal Conditions</h2>
+            <p class="text-xs sm:text-sm text-slate-500">Please review the mandatory service conditions of Globe Tech Pvt Ltd.</p>
+          </div>
+        </div>
+
+        <!-- Scrollable Terms Box -->
+        <div class="p-4 rounded-xl bg-slate-50 border border-slate-200 text-xs sm:text-sm text-slate-600 space-y-3 max-h-52 overflow-y-auto leading-relaxed">
+          <p class="font-semibold text-slate-900">Globe Tech Pvt Ltd - Service & Performance Guidelines:</p>
+          <ol class="list-decimal pl-4 space-y-2">
+            <li>
+              <strong class="text-slate-800">Minimum Capital Obligation:</strong> The client explicitly undertakes to maintain a minimum operational trading capital of <span class="text-blue-700 font-semibold">₹1,00,000 (One Lac Rupees)</span> in their personal Demat/trading account throughout the subscription tenure to allow proper position sizing.
+            </li>
+            <li>
+              <strong class="text-slate-800">Profit Target Guidelines:</strong> Research models and algorithms target predefined return objectives (e.g., 20-25% for 1 month, 40-50% for 2 months, 70-85% for 3 months, 150-180% for 6 months). Financial markets inherently carry risk, and algorithmic models operate on quantitative statistical probabilities.
+            </li>
+            <li>
+              <strong class="text-slate-800">Non-Refundable Subscription Fee:</strong> The advisory/software subscription fee along with 18% statutory Goods & Services Tax (GST) is completely non-refundable once account setup or signal routing is initiated.
+            </li>
+            <li>
+              <strong class="text-slate-800">Client Account Sovereignty:</strong> All trading accounts remain strictly under the ownership and control of the client. Globe Tech Pvt Ltd provides analytical inputs, automated webhooks, and technology setups; the company never pools or holds client trading capital.
+            </li>
+            <li>
+              <strong class="text-slate-800">KYC & PAN Declaration:</strong> The client confirms that the PAN card and identification data provided belong to the individual signing this digital onboarding form.
+            </li>
+          </ol>
+        </div>
+
+        <!-- Mandatory Agreement Checkbox -->
+        <div class="mt-5 p-4 rounded-xl border border-blue-200 bg-blue-50/70">
+          <label class="flex items-start gap-3 cursor-pointer select-none">
+            <input
+              type="checkbox"
+              id="termsCheckbox"
+              name="termsCheckbox"
+              required
+              class="mt-1 w-5 h-5 rounded border-slate-300 text-blue-600 focus:ring-blue-500 transition cursor-pointer"
+            />
+            <span class="text-xs sm:text-sm text-slate-800 leading-normal">
+              <strong>I Agree to the Terms & Conditions:</strong> I have read, understood, and accept all the terms of Globe Tech Pvt Ltd. I explicitly confirm that I will maintain the minimum required capital of <strong>₹1,00,000</strong> in my trading account and agree to the profit target milestones and non-refundable fee structure.
+            </span>
+          </label>
+          <p id="termsError" class="hidden text-xs text-red-600 font-medium mt-2 pl-8">
+            You must accept the Terms & Conditions and confirm the ₹1 Lac capital requirement to proceed.
+          </p>
+        </div>
+      </section>
+
+      <!-- SECTION 4: Submission Actions -->
+      <section class="flex flex-col sm:flex-row items-center justify-between gap-4 pt-2">
+        <div class="text-xs text-slate-500 text-center sm:text-left">
+          Clicking Submit will prompt a mobile number confirmation to complete your registration.
+        </div>
+        <button
+          type="submit"
+          id="submitButton"
+          class="w-full sm:w-auto px-8 py-3.5 rounded-xl bg-blue-600 hover:bg-blue-700 active:bg-blue-800 text-white font-bold text-sm sm:text-base shadow-lg shadow-blue-600/30 transition flex items-center justify-center gap-2"
+        >
+          <span>Submit Client Onboarding</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </section>
+
+    </form>
+  </main>
+
+  <!-- CONFIRM MOBILE NUMBER MODAL -->
+  <div id="confirmMobileModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="glass-card max-w-md w-full rounded-3xl p-6 sm:p-7 shadow-2xl border border-slate-200">
+      <div class="w-12 h-12 mx-auto rounded-2xl bg-blue-100 text-blue-600 flex items-center justify-center mb-3">
+        <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"></path></svg>
+      </div>
+      <h3 class="text-xl font-black text-slate-900 text-center">Confirm Mobile Number</h3>
+      <p class="text-xs sm:text-sm text-slate-600 text-center mt-1">
+        सुरक्षा और वेरिफिकेशन के लिए कृपया अपना 10 अंकों का मोबाइल नंबर दोबारा दर्ज करें:
+      </p>
+
+      <div class="mt-5">
+        <label for="confirmPhoneInput" class="block text-xs font-semibold uppercase tracking-wider text-slate-700 mb-1.5">
+          Re-enter Mobile Number <span class="text-red-500">*</span>
+        </label>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400 text-sm font-semibold">+91</span>
+          <input
+            type="tel"
+            id="confirmPhoneInput"
+            maxlength="10"
+            placeholder="9876543210"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            class="w-full pl-14 pr-4 py-2.5 rounded-xl border border-slate-300 text-slate-900 text-sm font-mono transition"
+          />
+        </div>
+        <p id="confirmPhoneError" class="hidden text-xs text-red-600 font-semibold mt-1.5">
+          ⚠️ Mobile number match nahi hua! Pehle daale gaye number se match karein.
+        </p>
+      </div>
+
+      <div class="mt-6 flex flex-col sm:flex-row gap-2.5">
+        <button
+          type="button"
+          id="btnCancelConfirm"
+          onclick="closeConfirmModal()"
+          class="w-full sm:w-1/3 py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-xs transition"
+        >
+          Cancel
+        </button>
+        <button
+          type="button"
+          id="btnVerifySubmit"
+          onclick="verifyAndSubmitToWhatsApp()"
+          class="w-full sm:w-2/3 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-1.5 shadow-md transition"
+        >
+          <span>Confirm & Submit</span>
+          <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M14 5l7 7m0 0l-7 7m7-7H3"></path></svg>
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- SUCCESS CONFIRMATION MODAL -->
+  <div id="successModal" class="fixed inset-0 bg-slate-950/70 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+    <div class="glass-card max-w-lg w-full rounded-3xl p-6 sm:p-8 shadow-2xl border border-slate-200">
+      
+      <!-- Checkmark Icon -->
+      <div class="w-14 h-14 mx-auto rounded-2xl bg-emerald-100 text-emerald-600 flex items-center justify-center mb-4 badge-glow">
+        <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7"></path></svg>
+      </div>
+
+      <h3 class="text-2xl font-black text-slate-900 text-center">Details Sent to WhatsApp!</h3>
+      <p class="text-xs sm:text-sm text-slate-600 text-center mt-1">
+        Client agreement for <strong>Globe Tech Pvt Ltd</strong> WhatsApp (+91 7566598095) par bhej diya gaya hai.
+      </p>
+
+      <!-- Digital Receipt Card -->
+      <div class="mt-5 p-4 rounded-2xl bg-slate-50 border border-slate-200 text-xs space-y-2.5 font-mono">
+        <div class="flex justify-between border-b border-slate-200 pb-2">
+          <span class="text-slate-500 font-sans">Reference ID:</span>
+          <span id="receiptRefId" class="font-bold text-slate-900">GT-2026-8912</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500 font-sans">Client Name:</span>
+          <span id="receiptName" class="font-bold text-slate-900">Dev Sharma</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500 font-sans">Father's Name:</span>
+          <span id="receiptFather" class="font-bold text-slate-900">Ramesh Sharma</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500 font-sans">DOB:</span>
+          <span id="receiptDob" class="font-bold text-slate-900">1995-05-15</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500 font-sans">Mobile:</span>
+          <span id="receiptMobile" class="font-bold text-slate-900">+91 9876543210</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500 font-sans">Email:</span>
+          <span id="receiptEmail" class="font-bold text-slate-900">dev@example.com</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500 font-sans">PAN Number:</span>
+          <span id="receiptPan" class="font-bold text-slate-900">ABCDE1234F</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500 font-sans">Selected Plan:</span>
+          <span id="receiptPlan" class="font-bold text-blue-600">1 Month Plan</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500 font-sans">Total Amount (18% GST):</span>
+          <span id="receiptAmount" class="font-bold text-emerald-600">₹76,700</span>
+        </div>
+        <div class="flex justify-between">
+          <span class="text-slate-500 font-sans">Min. Capital Stated:</span>
+          <span class="font-bold text-slate-900">₹1,00,000 (Agreed)</span>
+        </div>
+        <div class="flex justify-between border-t border-slate-200 pt-2 text-[11px] text-slate-400">
+          <span class="font-sans">Timestamp:</span>
+          <span id="receiptTime">10-Nov-2026 09:34 AM</span>
+        </div>
+      </div>
+
+      <!-- Action Buttons -->
+      <div class="mt-6 flex flex-col gap-2.5">
+        <button
+          type="button"
+          id="btnWhatsApp"
+          onclick="shareToWhatsAppDirect()"
+          class="w-full py-3 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs sm:text-sm flex items-center justify-center gap-2 shadow-md transition"
+        >
+          <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24"><path d="M12.031 6.172c-3.181 0-5.767 2.586-5.768 5.766-.001 1.298.38 2.27 1.019 3.287l-.582 2.128 2.182-.573c.978.58 1.911.928 3.145.929 3.178 0 5.767-2.587 5.768-5.766.001-3.187-2.575-5.771-5.764-5.771zm3.392 8.244c-.144.405-.837.774-1.17.824-.299.045-.677.063-1.092-.069-.252-.08-.575-.187-.988-.365-1.739-.751-2.874-2.502-2.961-2.617-.087-.116-.708-.94-.708-1.793s.448-1.273.607-1.446c.159-.173.346-.217.462-.217l.332.006c.106.005.249-.04.39.298.144.347.491 1.2.534 1.287.043.087.072.188.014.304-.058.116-.087.188-.173.289l-.26.304c-.087.086-.177.18-.076.354.101.174.449.741.964 1.201.662.591 1.221.774 1.394.861.173.086.275.072.376-.044.101-.116.433-.506.549-.68.116-.173.231-.145.39-.086s1.011.477 1.184.564.289.13.332.202c.043.073.043.419-.101.824z"/></svg>
+          <span>Share Details via WhatsApp</span>
+        </button>
+
+        <button
+          type="button"
+          id="btnDownload"
+          onclick="downloadSummary()"
+          class="w-full py-2.5 rounded-xl border border-slate-300 hover:bg-slate-50 text-slate-700 font-semibold text-xs flex items-center justify-center gap-2 transition"
+        >
+          <svg class="w-4 h-4 text-slate-500" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path></svg>
+          <span>Download Onboarding Summary (.txt)</span>
+        </button>
+
+        <button
+          type="button"
+          id="btnCloseModal"
+          onclick="closeSuccessModal()"
+          class="w-full py-2 text-slate-500 hover:text-slate-800 text-xs font-semibold"
+        >
+          Done & Close
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- Footer -->
+  <footer class="max-w-4xl mx-auto mt-12 pb-8 text-center text-xs text-slate-500">
+    <p>© 2026 Globe Tech Pvt Ltd. All rights reserved.</p>
+    <p class="mt-1">Hosted with GitHub Pages • Official Client Registration Portal</p>
+  </footer>
+
+  <!-- Interactive Logic -->
+  <script>
+    // WhatsApp Recipient
+    const OWNER_WHATSAPP_NUMBER = '917566598095';
+    const MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/gg1n5e2j33vw61dbid6rqfvulydyfop3';
+
+    // Plans configuration with GST calculations
+    const plansData = {
+      '1month': {
+        name: '1 Month Plan',
+        track: 'Starter Track',
+        baseFee: 65000,
+        gstRate: 0.18,
+        gstAmount: 11700,
+        totalAmount: 76700,
+        minCapital: '₹1,00,000',
+        profitTarget: '20% - 25% Profit Target',
+        features: 'Daily Algorithmic Advisory & Direct Setup'
+      },
+      '2months': {
+        name: '2 Months Plan',
+        track: 'Growth Track',
+        baseFee: 110000,
+        gstRate: 0.18,
+        gstAmount: 19800,
+        totalAmount: 129800,
+        minCapital: '₹1,00,000',
+        profitTarget: '40% - 50% Profit Target',
+        features: 'Multi-Strategy Execution & Risk Control'
+      },
+      '3months': {
+        name: '3 Months Plan',
+        track: 'Professional Track',
+        baseFee: 150000,
+        gstRate: 0.18,
+        gstAmount: 27000,
+        totalAmount: 177000,
+        minCapital: '₹1,00,000',
+        profitTarget: '70% - 85% Profit Target',
+        features: 'Dedicated Quant Advisor & Weekly Review'
+      },
+      '6months': {
+        name: '6 Months Plan',
+        track: 'Institutional Track',
+        baseFee: 270000,
+        gstRate: 0.18,
+        gstAmount: 48600,
+        totalAmount: 318600,
+        minCapital: '₹1,00,000',
+        profitTarget: '150% - 180% Profit Target',
+        features: 'Full Multi-Asset Portfolio Suite & Alpha Tools'
+      }
     };
 
-    function selectPlan(name, baseFee, element) {
-        selectedPlan = { name, baseFee };
-        document.querySelectorAll('.plan-card').forEach(card => card.classList.remove('selected'));
-        element.classList.add('selected');
+    let activePlanKey = '1month';
+    let lastSubmission = null;
+
+    // Plan Selection Handler
+    function selectPlan(planKey) {
+      if (!plansData[planKey]) return;
+      activePlanKey = planKey;
+      document.getElementById('selectedPlanInput').value = planKey;
+
+      // Update Visual Selection
+      const allCards = document.querySelectorAll('.plan-card');
+      allCards.forEach(card => {
+        card.classList.remove('active');
+        const check = card.querySelector('.plan-check');
+        if (check) {
+          check.className = 'plan-check w-6 h-6 rounded-full border border-slate-300 text-transparent flex items-center justify-center';
+        }
+      });
+
+      const selectedCard = document.getElementById(`plan-${planKey}`);
+      if (selectedCard) {
+        selectedCard.classList.add('active');
+        const check = selectedCard.querySelector('.plan-check');
+        if (check) {
+          check.className = 'plan-check w-6 h-6 rounded-full bg-blue-600 text-white flex items-center justify-center';
+        }
+      }
+
+      // Update Dynamic Summary Card
+      const plan = plansData[planKey];
+      document.getElementById('summaryPlanName').textContent = `${plan.name} Subscription`;
+      document.getElementById('summaryTarget').textContent = `Profit Target Milestone: ${plan.profitTarget} | Min. Capital: ${plan.minCapital}`;
+      document.getElementById('summaryTotalAmount').textContent = `₹${plan.totalAmount.toLocaleString('en-IN')}`;
+      document.getElementById('summaryBaseFee').textContent = `₹${plan.baseFee.toLocaleString('en-IN')}`;
+      document.getElementById('summaryGstFee').textContent = `₹${plan.gstAmount.toLocaleString('en-IN')}`;
     }
 
-    const emailInput = document.getElementById('email');
-    emailInput.addEventListener('input', () => {
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+/;
-        if (emailInput.value && !emailRegex.test(emailInput.value)) {
-            emailInput.classList.add('invalid');
-            document.getElementById('emailError').style.display = 'block';
+    // Email format validator
+    function validateEmailFormat(email) {
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/;
+      return emailRegex.test(email);
+    }
+
+    // Real-time Email validation with Green / White styling
+    function handleEmailInput() {
+      const emailInput = document.getElementById('clientEmail');
+      const emailVal = emailInput.value.trim();
+      const errorEl = document.getElementById('emailError');
+      const validBadge = document.getElementById('emailValidBadge');
+
+      if (!emailVal) {
+        emailInput.className = "w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-slate-900 text-sm transition placeholder-slate-400";
+        errorEl.classList.add('hidden');
+        validBadge.classList.add('hidden');
+        return false;
+      }
+
+      if (validateEmailFormat(emailVal)) {
+        // Valid email: Green border and emerald badge
+        emailInput.className = "w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-50/30 text-emerald-950 text-sm transition font-medium";
+        errorEl.classList.add('hidden');
+        validBadge.classList.remove('hidden');
+        return true;
+      } else {
+        // Invalid email: Red border and error message
+        emailInput.className = "w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-red-500 bg-red-50/20 text-slate-900 text-sm transition";
+        errorEl.classList.remove('hidden');
+        validBadge.classList.add('hidden');
+        return false;
+      }
+    }
+
+    // Real-time PAN validation
+    function validatePanRealtime() {
+      const panInput = document.getElementById('clientPan');
+      const panVal = panInput.value.trim().toUpperCase();
+      const panError = document.getElementById('panError');
+      const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+
+      if (panVal.length === 10) {
+        if (panRegex.test(panVal)) {
+          panInput.className = "w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-emerald-500 bg-emerald-50/30 text-slate-900 text-sm tracking-widest font-mono uppercase transition";
+          panError.classList.add('hidden');
         } else {
-            emailInput.classList.remove('invalid');
-            document.getElementById('emailError').style.display = 'none';
+          panInput.className = "w-full pl-10 pr-4 py-2.5 rounded-xl border-2 border-red-500 bg-red-50/20 text-slate-900 text-sm tracking-widest font-mono uppercase transition";
+          panError.classList.remove('hidden');
         }
-    });
-
-    function initiateSubmission() {
-        const form = document.getElementById('onboardingForm');
-        if (!form.checkValidity()) {
-            form.reportValidity();
-            return;
-        }
-
-        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+/;
-        if (!emailRegex.test(emailInput.value)) {
-            return;
-        }
-
-        document.getElementById('confirmModal').style.display = 'block';
+      } else {
+        panInput.className = "w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-slate-900 text-sm tracking-widest font-mono uppercase transition placeholder-slate-400";
+        panError.classList.add('hidden');
+      }
     }
 
-    async function finalizeSubmission() {
-        const originalMobile = document.getElementById('mobile').value;
-        const confirmMobile = document.getElementById('confirmMobile').value;
-        const mobileError = document.getElementById('mobileError');
+    // Initial Submit -> Validates all fields, opens Confirm Mobile Modal
+    function handleInitialSubmit(event) {
+      event.preventDefault();
 
-        if (originalMobile !== confirmMobile) {
-            mobileError.style.display = 'block';
-            return;
+      let hasError = false;
+
+      const nameInput = document.getElementById('clientName');
+      const fatherInput = document.getElementById('fatherName');
+      const dobInput = document.getElementById('clientDob');
+      const panInput = document.getElementById('clientPan');
+      const emailInput = document.getElementById('clientEmail');
+      const phoneInput = document.getElementById('clientPhone');
+      const termsInput = document.getElementById('termsCheckbox');
+
+      // 1. Validate Name
+      if (!nameInput.value.trim()) {
+        document.getElementById('nameError').classList.remove('hidden');
+        nameInput.classList.add('border-red-500');
+        hasError = true;
+      } else {
+        document.getElementById('nameError').classList.add('hidden');
+        nameInput.classList.remove('border-red-500');
+      }
+
+      // 2. Validate Father Name
+      if (!fatherInput.value.trim()) {
+        document.getElementById('fatherError').classList.remove('hidden');
+        fatherInput.classList.add('border-red-500');
+        hasError = true;
+      } else {
+        document.getElementById('fatherError').classList.add('hidden');
+        fatherInput.classList.remove('border-red-500');
+      }
+
+      // 3. Validate DOB
+      if (!dobInput.value) {
+        document.getElementById('dobError').classList.remove('hidden');
+        dobInput.classList.add('border-red-500');
+        hasError = true;
+      } else {
+        document.getElementById('dobError').classList.add('hidden');
+        dobInput.classList.remove('border-red-500');
+      }
+
+      // 4. Validate PAN
+      const panVal = panInput.value.trim().toUpperCase();
+      const panRegex = /^[A-Z]{5}[0-9]{4}[A-Z]{1}$/;
+      if (!panRegex.test(panVal)) {
+        document.getElementById('panError').classList.remove('hidden');
+        panInput.classList.add('border-red-500');
+        hasError = true;
+      } else {
+        document.getElementById('panError').classList.add('hidden');
+        panInput.classList.remove('border-red-500');
+      }
+
+      // 5. Validate Email
+      const emailVal = emailInput.value.trim();
+      if (!validateEmailFormat(emailVal)) {
+        document.getElementById('emailError').classList.remove('hidden');
+        emailInput.classList.add('border-red-500');
+        hasError = true;
+      } else {
+        document.getElementById('emailError').classList.add('hidden');
+      }
+
+      // 6. Validate Phone (10 digits)
+      const phoneVal = phoneInput.value.trim();
+      if (!phoneVal || phoneVal.length !== 10) {
+        document.getElementById('phoneError').classList.remove('hidden');
+        phoneInput.classList.add('border-red-500');
+        hasError = true;
+      } else {
+        document.getElementById('phoneError').classList.add('hidden');
+        phoneInput.classList.remove('border-red-500');
+      }
+
+      // 7. Validate Terms Checkbox (Bina check box tick kare aage na jaye)
+      if (!termsInput.checked) {
+        document.getElementById('termsError').classList.remove('hidden');
+        hasError = true;
+      } else {
+        document.getElementById('termsError').classList.add('hidden');
+      }
+
+      if (hasError) {
+        // Scroll to first error
+        const firstError = document.querySelector('.text-red-500:not(.hidden), .text-red-600:not(.hidden)');
+        if (firstError) {
+          firstError.scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
-        mobileError.style.display = 'none';
-        document.getElementById('confirmModal').style.display = 'none';
+        return;
+      }
 
-        const gstAmount = selectedPlan.baseFee * 0.18;
-        const totalAmount = selectedPlan.baseFee + gstAmount;
-
-        const submissionData = {
-            clientName: document.getElementById('clientName').value,
-            fatherName: document.getElementById('fatherName').value,
-            dob: document.getElementById('dob').value,
-            pan: document.getElementById('pan').value.toUpperCase(),
-            email: document.getElementById('email').value,
-            mobile: originalMobile,
-            planName: selectedPlan.name,
-            baseFee: selectedPlan.baseFee,
-            gstAmount: gstAmount,
-            totalAmount: totalAmount,
-            submissionTimestamp: new Date().toISOString()
-        };
-
-        // Send to Make.com Webhook
-        try {
-            await fetch(WEBHOOK_URL, {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify(submissionData)
-            });
-        } catch (error) {
-            console.error('Webhook error:', error);
-        }
-
-        // Prepare WhatsApp message
-        const message = `*NEW CLIENT ONBOARDING*\n\n` +
-            `*Client Name:* ${submissionData.clientName}\n` +
-            `*Father's Name:* ${submissionData.fatherName}\n` +
-            `*DOB:* ${submissionData.dob}\n` +
-            `*PAN:* ${submissionData.pan}\n` +
-            `*Email:* ${submissionData.email}\n` +
-            `*Mobile:* ${submissionData.mobile}\n\n` +
-            `*Selected Plan:* ${submissionData.planName}\n` +
-            `*Base Fee:* ₹${submissionData.baseFee.toLocaleString()}\n` +
-            `*GST (18%):* ₹${submissionData.gstAmount.toLocaleString()}\n` +
-            `*Total Amount:* ₹${submissionData.totalAmount.toLocaleString()}\n\n` +
-            `*Mandatory Capital:* Minimum 1 Lac INR acknowledged.`;
-
-        const encodedMessage = encodeURIComponent(message);
-        const whatsappUrl = `https://wa.me/${OWNER_PHONE}?text=${encodedMessage}`;
-
-        // UI Transition
-        document.getElementById('formContainer').style.display = 'none';
-        document.getElementById('thankYouScreen').style.display = 'block';
-
-        // Redirect to WhatsApp
-        window.location.href = whatsappUrl;
+      // All fields valid -> Open Confirm Mobile Modal
+      const confirmInput = document.getElementById('confirmPhoneInput');
+      confirmInput.value = '';
+      document.getElementById('confirmPhoneError').classList.add('hidden');
+      confirmInput.classList.remove('border-red-500');
+      document.getElementById('confirmMobileModal').classList.remove('hidden');
+      confirmInput.focus();
     }
-</script>
 
+    // Close Confirm Mobile Modal
+    function closeConfirmModal() {
+      document.getElementById('confirmMobileModal').classList.add('hidden');
+    }
+
+    // Verify Mobile and Final Submit directly to WhatsApp
+    function verifyAndSubmitToWhatsApp() {
+      const originalPhone = document.getElementById('clientPhone').value.trim();
+      const confirmPhone = document.getElementById('confirmPhoneInput').value.trim();
+      const confirmError = document.getElementById('confirmPhoneError');
+      const confirmInput = document.getElementById('confirmPhoneInput');
+
+      // Check if matches
+      if (!confirmPhone || confirmPhone !== originalPhone) {
+        confirmError.classList.remove('hidden');
+        confirmInput.classList.add('border-red-500');
+        return;
+      }
+
+      confirmError.classList.add('hidden');
+      confirmInput.classList.remove('border-red-500');
+      closeConfirmModal();
+
+      // Gather verified data
+      const randomNum = Math.floor(1000 + Math.random() * 9000);
+      const refId = `GT-2026-${randomNum}`;
+      const currentPlan = plansData[activePlanKey];
+      const now = new Date();
+      const formattedDate = now.toLocaleDateString('en-IN', { day: '2-digit', month: 'short', year: 'numeric' }) + ' ' + now.toLocaleTimeString('en-IN', { hour: '2-digit', minute: '2-digit' });
+
+      lastSubmission = {
+        refId: refId,
+        clientName: document.getElementById('clientName').value.trim(),
+        fatherName: document.getElementById('fatherName').value.trim(),
+        clientDob: document.getElementById('clientDob').value,
+        clientPhone: originalPhone,
+        clientEmail: document.getElementById('clientEmail').value.trim(),
+        clientPan: document.getElementById('clientPan').value.trim().toUpperCase(),
+        planKey: activePlanKey,
+        planName: currentPlan.name,
+        baseFee: currentPlan.baseFee,
+        gstAmount: currentPlan.gstAmount,
+        totalAmount: currentPlan.totalAmount,
+        profitTarget: currentPlan.profitTarget,
+        minCapital: '₹1,00,000',
+        timestamp: formattedDate
+      };
+
+      // Populate Digital Receipt Card
+      document.getElementById('receiptRefId').textContent = refId;
+      document.getElementById('receiptName').textContent = lastSubmission.clientName;
+      document.getElementById('receiptFather').textContent = lastSubmission.fatherName;
+      document.getElementById('receiptDob').textContent = lastSubmission.clientDob;
+      document.getElementById('receiptMobile').textContent = `+91 ${lastSubmission.clientPhone}`;
+      document.getElementById('receiptEmail').textContent = lastSubmission.clientEmail;
+      document.getElementById('receiptPan').textContent = lastSubmission.clientPan;
+      document.getElementById('receiptPlan').textContent = lastSubmission.planName;
+      document.getElementById('receiptAmount').textContent = `₹${lastSubmission.totalAmount.toLocaleString('en-IN')}`;
+      document.getElementById('receiptTime').textContent = formattedDate;
+
+      // Show Success Modal
+      document.getElementById('successModal').classList.remove('hidden');
+
+      // Local storage backup (safely wrapped)
+      try {
+        const stored = JSON.parse(localStorage.getItem('globe_tech_onboardings') || '[]');
+        stored.push(lastSubmission);
+        localStorage.setItem('globe_tech_onboardings', JSON.stringify(stored));
+      } catch (err) {
+        // localStorage safely handled
+      }
+
+      // Send data to Make.com Webhook
+      try {
+        fetch(MAKE_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(lastSubmission)
+        }).catch(err => console.warn('Webhook dispatch error:', err));
+      } catch (err) {
+        console.warn('Webhook fetch failed:', err);
+      }
+
+      // Immediately redirect to owner's WhatsApp
+      shareToWhatsAppDirect();
+    }
+
+    // Direct WhatsApp Message to Owner Number (7566598095)
+    function shareToWhatsAppDirect() {
+      if (!lastSubmission) return;
+
+      const message = 
+        `*GLOBE TECH PVT LTD - NEW CLIENT ONBOARDING*%0A` +
+        `----------------------------------------%0A` +
+        `*Reference ID:* ${lastSubmission.refId}%0A` +
+        `*Client Name:* ${lastSubmission.clientName}%0A` +
+        `*Father Name:* ${lastSubmission.fatherName}%0A` +
+        `*DOB:* ${lastSubmission.clientDob}%0A` +
+        `*Mobile Number:* +91 ${lastSubmission.clientPhone}%0A` +
+        `*Email ID:* ${lastSubmission.clientEmail}%0A` +
+        `*PAN Number:* ${lastSubmission.clientPan}%0A` +
+        `----------------------------------------%0A` +
+        `*SELECTED SERVICE PLAN*%0A` +
+        `*Plan:* ${lastSubmission.planName}%0A` +
+        `*Base Fee:* Rs. ${lastSubmission.baseFee.toLocaleString('en-IN')}%0A` +
+        `*18% GST:* Rs. ${lastSubmission.gstAmount.toLocaleString('en-IN')}%0A` +
+        `*Total Payable:* Rs. ${lastSubmission.totalAmount.toLocaleString('en-IN')}%0A` +
+        `*Min. Capital (Agreed):* Rs. 1,00,000%0A` +
+        `*Profit Target Milestone:* ${lastSubmission.profitTarget}%0A` +
+        `----------------------------------------%0A` +
+        `*Terms & Conditions:* ACCEPTED & CONFIRMED%0A` +
+        `*Submitted At:* ${lastSubmission.timestamp}`;
+
+      const whatsappUrl = `https://api.whatsapp.com/send?phone=${OWNER_WHATSAPP_NUMBER}&text=${message}`;
+      window.open(whatsappUrl, '_blank');
+    }
+
+    // Close Success Modal
+    function closeSuccessModal() {
+      document.getElementById('successModal').classList.add('hidden');
+    }
+
+    // Download Summary as text file
+    function downloadSummary() {
+      if (!lastSubmission) return;
+      const content = `==========================================================\n` +
+        `              GLOBE TECH PVT LTD - ONBOARDING RECEIPT      \n` +
+        `==========================================================\n\n` +
+        `Application Reference ID : ${lastSubmission.refId}\n` +
+        `Submission Timestamp     : ${lastSubmission.timestamp}\n\n` +
+        `CLIENT DETAILS:\n` +
+        `----------------------------------------------------------\n` +
+        `Client Legal Name        : ${lastSubmission.clientName}\n` +
+        `Father's Name            : ${lastSubmission.fatherName}\n` +
+        `Date of Birth            : ${lastSubmission.clientDob}\n` +
+        `Mobile / WhatsApp        : +91 ${lastSubmission.clientPhone}\n` +
+        `Email Address            : ${lastSubmission.clientEmail}\n` +
+        `PAN Card Number          : ${lastSubmission.clientPan}\n\n` +
+        `PLAN & PRICING BREAKDOWN:\n` +
+        `----------------------------------------------------------\n` +
+        `Selected Service Plan    : ${lastSubmission.planName}\n` +
+        `Base Service Fee         : Rs. ${lastSubmission.baseFee.toLocaleString('en-IN')}\n` +
+        `Statutory GST (18%)      : Rs. ${lastSubmission.gstAmount.toLocaleString('en-IN')}\n` +
+        `Net Total Payable        : Rs. ${lastSubmission.totalAmount.toLocaleString('en-IN')}\n` +
+        `Minimum Trading Capital  : Rs. 1,00,000 (One Lac Required)\n` +
+        `Service Profit Target    : ${lastSubmission.profitTarget}\n\n` +
+        `TERMS & CONDITIONS:\n` +
+        `----------------------------------------------------------\n` +
+        `Status                   : Accepted & Electronically Verified\n` +
+        `Capital Commitment       : Minimum Rs. 1 Lac verified\n` +
+        `Fee Policy               : Non-refundable post activation\n` +
+        `Direct WhatsApp Dispatch : +91 ${OWNER_WHATSAPP_NUMBER}\n\n` +
+        `==========================================================\n` +
+        `Thank you for onboarding with Globe Tech Pvt Ltd.\n` +
+        `==========================================================\n`;
+
+      const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+      const url = URL.createObjectURL(blob);
+      const link = document.createElement('a');
+      link.href = url;
+      link.download = `GlobeTech_Onboarding_${lastSubmission.refId}.txt`;
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
+      URL.revokeObjectURL(url);
+    }
+  </script>
 </body>
 </html>
+```
