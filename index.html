@@ -1,3 +1,4 @@
+```html
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -130,7 +131,7 @@
                 id="clientName"
                 name="clientName"
                 required
-                placeholder="e.g. dev singh"
+                placeholder="e.g. Dev Sharma"
                 class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-slate-900 text-sm transition placeholder-slate-400"
               />
             </div>
@@ -221,7 +222,7 @@
                 id="clientEmail"
                 name="clientEmail"
                 required
-                placeholder="raj@example.com"
+                placeholder="dev@example.com"
                 oninput="handleEmailInput()"
                 onblur="handleEmailInput()"
                 class="w-full pl-10 pr-4 py-2.5 rounded-xl border border-slate-300 text-slate-900 text-sm transition placeholder-slate-400"
@@ -593,7 +594,7 @@
         </div>
         <div class="flex justify-between">
           <span class="text-slate-500 font-sans">Client Name:</span>
-          <span id="receiptName" class="font-bold text-slate-900">Nitin Sharma</span>
+          <span id="receiptName" class="font-bold text-slate-900">Dev Sharma</span>
         </div>
         <div class="flex justify-between">
           <span class="text-slate-500 font-sans">Father's Name:</span>
@@ -609,7 +610,7 @@
         </div>
         <div class="flex justify-between">
           <span class="text-slate-500 font-sans">Email:</span>
-          <span id="receiptEmail" class="font-bold text-slate-900">nitin@example.com</span>
+          <span id="receiptEmail" class="font-bold text-slate-900">dev@example.com</span>
         </div>
         <div class="flex justify-between">
           <span class="text-slate-500 font-sans">PAN Number:</span>
@@ -678,6 +679,7 @@
   <script>
     // WhatsApp Recipient
     const OWNER_WHATSAPP_NUMBER = '917566598095';
+    const MAKE_WEBHOOK_URL = 'https://hook.eu1.make.com/gg1n5e2j33vw61dbid6rqfvulydyfop3';
 
     // Plans configuration with GST calculations
     const plansData = {
@@ -995,6 +997,17 @@
         // localStorage safely handled
       }
 
+      // Send data to Make.com Webhook
+      try {
+        fetch(MAKE_WEBHOOK_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(lastSubmission)
+        }).catch(err => console.warn('Webhook dispatch error:', err));
+      } catch (err) {
+        console.warn('Webhook fetch failed:', err);
+      }
+
       // Immediately redirect to owner's WhatsApp
       shareToWhatsAppDirect();
     }
@@ -1081,3 +1094,4 @@
   </script>
 </body>
 </html>
+```
